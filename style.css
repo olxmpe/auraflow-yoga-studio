@@ -3,7 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Yeseva+One&display=swap");
 
 :root {
-  --black: #091811;
+  --black: #23231e;
   --grey: #4b4a45;
   --brown: #5a4e3e;
   --white: #d4c7b4;
@@ -13,6 +13,11 @@ html,
 body {
   height: 100%;
   background-color: var(--black);
+  overflow: hidden;
+}
+
+.animated-svg {
+  transform-origin: 50% 50%;
 }
 
 * {
@@ -24,7 +29,8 @@ body {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: "Yeseva One", serif;
   font-weight: 400;
   font-style: normal;
@@ -35,13 +41,17 @@ h1 {
 }
 
 h2 {
+  font-size: 30px;
+}
+
+h3 {
   font-size: 20px;
 }
 
 .highlight {
   font-family: "Arapey", serif;
-  font-weight: 400;
   font-style: italic;
+  font-size: 40px !important;
 }
 
 p {
@@ -67,8 +77,26 @@ p {
 }
 
 .nav-item {
-  font-weight: 500;
-  font-size: 15px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+}
+
+.nav-item::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  bottom: -3px;
+  width: 0;
+  height: 1px;
+  background-color: var(--brown);
+  transition: width 0.5s ease;
+}
+
+.nav-item:hover::after {
+  width: 80%;
 }
 
 .boxes {
@@ -78,6 +106,7 @@ p {
 }
 
 .box {
+  opacity: 0;
   padding: 30px;
   border-radius: 20px;
 }
@@ -134,6 +163,7 @@ p {
   background-color: var(--white);
   height: 50px;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .city {
@@ -145,4 +175,35 @@ p {
   background-position: center bottom;
   background-size: cover;
   height: 160px;
+}
+
+.aura {
+  cursor: none;
+}
+
+#text {
+  opacity: 0;
+  pointer-events: none;
+  position: relative;
+  animation: text-effect 4s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes text-effect {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+.rotating-text {
+  position: absolute;
+  font-family: "Arapey", serif;
+  font-style: italic;
+  font-size: 25px;
+  color: var(--brown);
 }
