@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Yeseva+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Yeseva+One&display=swap");
+
+:root {
+  --black: #091811;
+  --grey: #4b4a45;
+  --brown: #5a4e3e;
+  --white: #d4c7b4;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: var(--black);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+h1,
+h2 {
+  font-family: "Yeseva One", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h1 {
+  font-size: 35px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+.highlight {
+  font-family: "Arapey", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.flex {
+  display: flex;
+  gap: 30px;
+}
+
+.spaced {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.top {
+  margin: 30px;
+  max-height: 100px;
+}
+
+.nav-item {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.boxes {
+  min-height: calc(100% - 190px);
+  margin: 30px;
+  height: calc(100% - 190px);
+}
+
+.box {
+  padding: 30px;
+  border-radius: 20px;
+}
+
+.box.light {
+  background-color: var(--white);
+  color: var(--black);
+}
+
+.box.dark {
+  background-color: var(--grey);
+  color: var(--white);
+}
+
+.left {
+  height: 100%;
+  flex-direction: column;
+}
+
+.title-area {
+  flex: 1;
+}
+
+.title {
+  flex-direction: column;
+  flex: 2;
+  align-items: flex-start;
+}
+
+.content {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.image-box {
+  flex: 0.5;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.right {
+  min-width: 30%;
+  flex-direction: column;
+}
+
+.locations {
+  flex: 1;
+  overflow: scroll;
+}
+
+.location {
+  border-bottom: solid 1px var(--black);
+  border-width: 1px 0;
+  background-color: var(--white);
+}
+
+.location:last-child {
+  border-bottom: none;
+}
+
+.city {
+  margin: 15px 0;
+}
+
+.studio {
+  margin-bottom: 15px;
+  background-position: center bottom;
+  background-size: cover;
+  height: 160px;
+}
