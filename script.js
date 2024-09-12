@@ -1,35 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
   const locations = document.querySelectorAll(".location");
   const imageBox = document.querySelector(".image-box");
-  const boxes = document.querySelectorAll(".box");
   const animatedSVG = document.querySelector(".animated-svg");
-
+  const boxes = Array.from(document.querySelectorAll(".box"));
   const auraClickableDiv = document.querySelector(".aura");
   const cursorString = "step into the aura";
-
   const text = document.getElementById("text");
-  for (let i = 0; i < cursorString.length; i++) {
-    let span = document.createElement("span");
-    span.classList.add("rotating-text");
-    span.innerHTML = cursorString[i];
 
-    const angle = (360 / cursorString.length) * i;
-    span.style.transform = `rotate(${angle}deg) translateX(75px)`;
-    text.appendChild(span);
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
   }
 
-  auraClickableDiv.addEventListener("mouseenter", (e) => {
-    text.style.opacity = 1;
-    updateTextPosition(e);
-  });
-
-  auraClickableDiv.addEventListener("mousemove", (e) => {
-    updateTextPosition(e);
-  });
-
-  auraClickableDiv.addEventListener("mouseleave", () => {
-    text.style.opacity = 0;
-  });
+  function createTextAnimation() {
+    cursorString.split("").forEach((char, i) => {
+      const span = document.createElement("span");
+      span.classList.add("rotating-text");
+      span.innerHTML = char;
+      const angle = (360 / cursorString.length) * i;
+      span.style.transform = `rotate(${angle}deg) translateX(75px)`;
+      text.appendChild(span);
+    });
+  }
 
   function updateTextPosition(e) {
     const rect = auraClickableDiv.getBoundingClientRect();
@@ -37,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     text.style.top = `${e.clientY - rect.top - text.offsetHeight / 2}px`;
   }
 
-  const playStartAnimations = async () => {
+  async function playStartAnimations() {
     const startImageKeyframes = new KeyframeEffect(
       imageBox,
       [
@@ -55,9 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
       startImageKeyframes,
       document.timeline
     );
-
     startImageAnimation.play();
     await startImageAnimation.finished;
+
+    shuffleArray(boxes);
 
     boxes.forEach((box) => {
       if (!box.classList.contains("image-box")) {
@@ -68,20 +63,47 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         const boxesAnimation = new Animation(boxesKeyframes, document.timeline);
-        boxesAnimation.play();
+        const delay = Math.random() * 2000;
+        setTimeout(() => {
+          boxesAnimation.play();
+        }, delay);
       }
     });
+  }
 
+  function setupLocationAnimations() {
+    locations.forEach((location) => {
+      const expandAnimation = new KeyframeEffect(
+        location,
+        [{ height: "50px" }, { height: "290px" }],
+        {
+          duration: 500,
+          fill: "forwards",
+        }
+      );
+
+      const expand = new Animation(expandAnimation, document.timeline);
+
+      location.addEventListener("mouseenter", () => {
+        if (expand.playState === "running" || expand.playState === "finished") {
+          expand.reverse();
+        } else {
+          expand.play();
+        }
+      });
+
+      location.addEventListener("mouseleave", () => {
+        expand.reverse();
+      });
+    });
+  }
+
+  function setupSVGAnimation() {
     const animatedSVGKeyframes = new KeyframeEffect(
       animatedSVG,
       [
-        {
-          transform: "rotate(0deg)",
-        },
-        {
-          transform: "rotate(180deg)",
-          transformOrigin: "50% 50%",
-        },
+        { transform: "rotate(0deg)" },
+        { transform: "rotate(180deg)", transformOrigin: "50% 50%" },
       ],
       {
         duration: 20000,
@@ -92,32 +114,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const svgAnimation = new Animation(animatedSVGKeyframes, document.timeline);
     svgAnimation.play();
-  };
+  }
+
+  function setupAuraText() {
+    createTextAnimation();
+
+    auraClickableDiv.addEventListener("mouseenter", (e) => {
+      text.style.opacity = 1;
+      updateTextPosition(e);
+    });
+
+    auraClickableDiv.addEventListener("mousemove", (e) => {
+      updateTextPosition(e);
+    });
+
+    auraClickableDiv.addEventListener("mouseleave", () => {
+      text.style.opacity = 0;
+    });
+  }
 
   playStartAnimations();
-
-  locations.forEach((location) => {
-    const expandAnimation = new KeyframeEffect(
-      location,
-      [{ height: "50px" }, { height: "290px" }],
-      {
-        duration: 500,
-        fill: "forwards",
-      }
-    );
-
-    const expand = new Animation(expandAnimation, document.timeline);
-
-    location.addEventListener("mouseenter", () => {
-      if (expand.playState === "running" || expand.playState === "finished") {
-        expand.reverse();
-      } else {
-        expand.play();
-      }
-    });
-
-    location.addEventListener("mouseleave", () => {
-      expand.reverse();
-    });
-  });
+  setupLocationAnimations();
+  setupSVGAnimation();
+  setupAuraText();
 });
