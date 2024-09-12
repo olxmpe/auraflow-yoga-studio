@@ -132,10 +132,8 @@ p {
   border-bottom: solid 1px var(--black);
   border-width: 1px 0;
   background-color: var(--white);
-}
-
-.location:last-child {
-  border-bottom: none;
+  height: 50px;
+  overflow: hidden;
 }
 
 .city {
