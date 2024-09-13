@@ -3,32 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const imageBox = document.querySelector(".image-box");
   const animatedSVG = document.querySelector(".animated-svg");
   const boxes = Array.from(document.querySelectorAll(".box"));
-  const auraClickableDiv = document.querySelector(".aura");
-  const cursorString = "step into the aura";
-  const text = document.getElementById("text");
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
-  }
-
-  function createTextAnimation() {
-    cursorString.split("").forEach((char, i) => {
-      const span = document.createElement("span");
-      span.classList.add("rotating-text");
-      span.innerHTML = char;
-      const angle = (360 / cursorString.length) * i;
-      span.style.transform = `rotate(${angle}deg) translateX(75px)`;
-      text.appendChild(span);
-    });
-  }
-
-  function updateTextPosition(e) {
-    const rect = auraClickableDiv.getBoundingClientRect();
-    text.style.left = `${e.clientX - rect.left - text.offsetWidth / 2}px`;
-    text.style.top = `${e.clientY - rect.top - text.offsetHeight / 2}px`;
   }
 
   async function playStartAnimations() {
@@ -116,25 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     svgAnimation.play();
   }
 
-  function setupAuraText() {
-    createTextAnimation();
-
-    auraClickableDiv.addEventListener("mouseenter", (e) => {
-      text.style.opacity = 1;
-      updateTextPosition(e);
-    });
-
-    auraClickableDiv.addEventListener("mousemove", (e) => {
-      updateTextPosition(e);
-    });
-
-    auraClickableDiv.addEventListener("mouseleave", () => {
-      text.style.opacity = 0;
-    });
-  }
-
   playStartAnimations();
   setupLocationAnimations();
   setupSVGAnimation();
-  setupAuraText();
 });

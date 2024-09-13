@@ -178,32 +178,5 @@ p {
 }
 
 .aura {
-  cursor: none;
-}
-
-#text {
-  opacity: 0;
-  pointer-events: none;
-  position: relative;
-  animation: text-effect 4s linear infinite;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@keyframes text-effect {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(-360deg);
-  }
-}
-
-.rotating-text {
-  position: absolute;
-  font-family: "Arapey", serif;
-  font-style: italic;
-  font-size: 25px;
-  color: var(--brown);
+  cursor: pointer;
 }
